@@ -1,7 +1,9 @@
 exports.createPages = async ({ actions, graphql, reporter }) => {
-  const { createPage } = actions
+  const { createPage } = actions;
 
-  const blogPostTemplate = require.resolve(`./src/templates/documentationTemplate.jsx`)
+  const blogPostTemplate = require.resolve(
+    './src/templates/documentationTemplate.jsx',
+  );
 
   const result = await graphql(`
     {
@@ -18,12 +20,12 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
         }
       }
     }
-  `)
+  `);
 
   // Handle errors
   if (result.errors) {
-    reporter.panicOnBuild(`Error while running GraphQL query.`)
-    return
+    reporter.panicOnBuild('Error while running GraphQL query.');
+    return;
   }
 
   result.data.allMarkdownRemark.edges.forEach(({ node }) => {
@@ -34,6 +36,6 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
         // additional data can be passed via context
         slug: node.frontmatter.slug,
       },
-    })
-  })
-}
+    });
+  });
+};
