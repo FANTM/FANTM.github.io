@@ -1,9 +1,9 @@
 ---
 slug: '/arduino/'
 date: '2019-05-04'
-title: 'My first blog post'
+title: 'Welcome'
 ---
 
-# Test Docs
+# Docs
 
-Hey there friend ;)
+Welcome to our documentation page. It's absolutely a WIP but eventually will look great, I promise!

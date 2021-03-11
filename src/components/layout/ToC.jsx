@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Hidden, Drawer } from '@material-ui/core';
+import { Hidden, Drawer, Divider } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { graphql, useStaticQuery } from 'gatsby';
+import ToCParentButton from '../buttons/ToCParentButton';
+import ToCChildButton from '../buttons/ToCChildButton';
 
 const drawerWidth = 240;
 
@@ -16,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
   drawerPaper: {
     width: drawerWidth,
   },
+  spacer: theme.mixins.toolbar,
 }));
 
 const tocQuery = graphql`
@@ -30,16 +33,73 @@ const tocQuery = graphql`
   }
 `;
 
+// Uses a tree traversal to convert the entire Table of Contents to JSX
+function convertToJSX(nodeName, nodeSet, tree, elementJsx, level) {
+  // Base Case
+  if (nodeSet.size === 0) {
+    elementJsx.push(
+      <ToCChildButton key={nodeName} content={nodeName} level={level} />,
+    );
+    return elementJsx;
+  }
+  // Traverse from left to right recursively
+  let myKids = [];
+  nodeSet.forEach((child) => {
+    myKids = convertToJSX(child, tree.get(child), tree, myKids, level + 1);
+  });
+  // Visit the actual parent after all of the children are determined.
+  elementJsx.push(
+    <ToCParentButton
+      key={nodeName}
+      content={nodeName}
+      kids={myKids}
+      level={level}
+    />,
+  );
+  return elementJsx;
+}
+
 function ToC({ mobileOpen, toggleDrawer }) {
   const classes = useStyles();
   const theme = useTheme();
   const data = useStaticQuery(tocQuery);
 
   const contents = data.allTableOfContentsYaml.edges[0].node.toc;
-  console.log(contents);
+  const delimeter = '/';
+  const tree = new Map();
+  tree.set('root', new Set());
+  contents.forEach((element) => {
+    const pathPieces = element.split(delimeter);
+    pathPieces.forEach((piece, index) => {
+      if (index === 0) {
+        const parent = tree.get('root');
+        const curr = tree.get(piece) || new Set();
+        parent.add(piece);
+        tree.set('root', parent);
+        tree.set(piece, curr);
+      } else {
+        const parent = tree.get(pathPieces[index - 1]);
+        const curr = tree.get(piece) || new Set();
+        parent.add(piece);
+        tree.set(pathPieces[index - 1], parent);
+        tree.set(piece, curr);
+      }
+    });
+  });
+  const node = tree.get('root');
+  const tableOfContentsData = [];
+  console.log(node);
+  node.forEach((child) => {
+    console.log(child);
+    tableOfContentsData.push(convertToJSX(child, tree.get(child), tree, [], 0));
+  });
+  // const tableOfContentsData = convertToJSX('root', node, tree, [], 0);
 
-  const container =
-    window !== undefined ? () => window.document.body : undefined;
+  let container;
+
+  useEffect(() => {
+    container = window !== undefined ? () => window.document.body : undefined;
+  }, []);
 
   return (
     <nav className={classes.drawer} aria-label="documentation navigation">
@@ -57,7 +117,7 @@ function ToC({ mobileOpen, toggleDrawer }) {
             keepMounted: true, // Better open performance on mobile.
           }}
         >
-          get
+          {tableOfContentsData}
         </Drawer>
       </Hidden>
       <Hidden xsDown implementation="css">
@@ -68,7 +128,9 @@ function ToC({ mobileOpen, toggleDrawer }) {
           variant="permanent"
           open
         >
-          hey
+          <div className={classes.spacer} />
+          <Divider />
+          {tableOfContentsData}
         </Drawer>
       </Hidden>
     </nav>
