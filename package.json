@@ -14,7 +14,7 @@
     "build": "gatsby build",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
-    "deploy": "gatsby build && gh-pages -d public",
+    "deploy": "gatsby build && echo 'docs.getfantm.com' > ./build/CNAME && gh-pages -d public",
     "pretty": "prettier --write src && prettier --write gatsby-config.js && prettier --write gatsby-node.js && prettier --write gatsby-browser.js && prettier --write gatsby-ssr.js"
   },
   "dependencies": {
