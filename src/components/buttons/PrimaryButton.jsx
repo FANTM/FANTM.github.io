@@ -5,17 +5,35 @@ import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    background: `linear-gradient(135deg, ${theme.palette.secondary.main} 30%, ${theme.palette.primary.main} 90%)`,
+    fontWeight: 'bold',
+    transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1)',
+    '&:hover': {
+      color: 'white',
+      backgroundColor: theme.palette.primary.main,
+    },
   },
 }));
 
-function PrimaryButton({ children }) {
+function PrimaryButton({ children, className }) {
   const classes = useStyles();
-  return <Button className={classes.root}>{children}</Button>;
+  return (
+    <Button
+      size="large"
+      variant="outlined"
+      className={`${classes.root} ${className}`}
+    >
+      {children}
+    </Button>
+  );
 }
 
 export default PrimaryButton;
 
 PrimaryButton.propTypes = {
   children: PropTypes.node.isRequired,
+  className: PropTypes.string,
+};
+
+PrimaryButton.defaultProps = {
+  className: '',
 };

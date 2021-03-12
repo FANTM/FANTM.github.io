@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import { Hidden, Drawer, Divider } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { graphql, useStaticQuery } from 'gatsby';
+
 import ToCParentButton from '../buttons/ToCParentButton';
 import ToCChildButton from '../buttons/ToCChildButton';
+import LogoButton from '../buttons/LogoButton';
 
 const drawerWidth = 240;
 
@@ -16,9 +18,13 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   drawerPaper: {
+    borderRight: 'none',
+    background: 'rgb(50 50 50)',
     width: drawerWidth,
   },
-  spacer: theme.mixins.toolbar,
+  spacer: {
+    height: '40px',
+  },
 }));
 
 const tocQuery = graphql`
@@ -78,7 +84,6 @@ function ToC({ mobileOpen, toggleDrawer }) {
   const data = useStaticQuery(tocQuery);
 
   useEffect(() => {
-    console.log('');
     const contents = data.allTableOfContentsYaml.edges[0].node.toc;
     const delimeter = '/';
     const tree = new Map();
@@ -131,7 +136,7 @@ function ToC({ mobileOpen, toggleDrawer }) {
             keepMounted: true, // Better open performance on mobile.
           }}
         >
-          <div className={classes.spacer} />
+          <LogoButton containerWidth={drawerWidth} />
           <Divider />
           {tableOfContentsData}
         </Drawer>
@@ -144,8 +149,8 @@ function ToC({ mobileOpen, toggleDrawer }) {
           variant="permanent"
           open
         >
+          <LogoButton />
           <div className={classes.spacer} />
-          <Divider />
           {tableOfContentsData}
         </Drawer>
       </Hidden>

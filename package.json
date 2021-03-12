@@ -14,7 +14,7 @@
     "build": "gatsby build",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
-    "deploy": "gatsby build && echo docs.getfantm.com > ./public/CNAME && gh-pages -d public",
+    "deploy": "gatsby build && gh-pages -d public",
     "pretty": "prettier --write src && prettier --write gatsby-config.js && prettier --write gatsby-node.js && prettier --write gatsby-browser.js && prettier --write gatsby-ssr.js"
   },
   "dependencies": {
@@ -23,6 +23,7 @@
     "@mdx-js/mdx": "^1.6.22",
     "@mdx-js/react": "^1.6.22",
     "gatsby": "^3.0.1",
+    "gatsby-plugin-image": "^1.0.1",
     "gatsby-plugin-material-ui": "^2.1.10",
     "gatsby-plugin-mdx": "^2.0.1",
     "gatsby-plugin-react-helmet": "^4.0.0",

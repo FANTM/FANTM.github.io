@@ -8,6 +8,10 @@ const useStyles = makeStyles({
   button: {
     width: '100%',
     justifyContent: 'left',
+    color: 'white',
+    '&:hover': {
+      backgroundColor: 'rgba(255, 255, 255, 0.14)',
+    },
   },
   link: {
     textDecoration: 'none',
