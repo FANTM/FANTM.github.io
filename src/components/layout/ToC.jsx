@@ -131,6 +131,8 @@ function ToC({ mobileOpen, toggleDrawer }) {
             keepMounted: true, // Better open performance on mobile.
           }}
         >
+          <div className={classes.spacer} />
+          <Divider />
           {tableOfContentsData}
         </Drawer>
       </Hidden>

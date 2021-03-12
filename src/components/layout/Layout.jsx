@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { MDXProvider } from '@mdx-js/react';
 import PropTypes from 'prop-types';
 import {
   createMuiTheme,
@@ -9,6 +10,8 @@ import {
 import Body from './Body';
 import Header from './Header';
 import ToC from './ToC';
+import DesignSystem from '../../../style/DesignSystem';
+import PageToC from './PageToC';
 
 const theme = createMuiTheme({
   palette: {
@@ -41,11 +44,24 @@ function Layout({ children }) {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className={classes.root}>
-        <Header toggleDrawer={toggleDrawer} />
-        <ToC mobileOpen={mobileOpen} toggleDrawer={toggleDrawer} />
-        <Body>{children}</Body>
-      </div>
+      <MDXProvider
+        components={{
+          h1: DesignSystem.h1,
+          h2: DesignSystem.h2,
+          h3: DesignSystem.h3,
+          h4: DesignSystem.h4,
+          h5: DesignSystem.h5,
+          h6: DesignSystem.h6,
+          p: DesignSystem.p,
+        }}
+      >
+        <div className={classes.root}>
+          <Header toggleDrawer={toggleDrawer} />
+          <ToC mobileOpen={mobileOpen} toggleDrawer={toggleDrawer} />
+          <Body>{children}</Body>
+          <PageToC />
+        </div>
+      </MDXProvider>
     </ThemeProvider>
   );
 }

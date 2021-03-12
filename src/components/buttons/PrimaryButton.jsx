@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -8,9 +9,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function PrimaryButton() {
+function PrimaryButton({ children }) {
   const classes = useStyles();
-  return <Button className={classes.root}>text</Button>;
+  return <Button className={classes.root}>{children}</Button>;
 }
 
 export default PrimaryButton;
+
+PrimaryButton.propTypes = {
+  children: PropTypes.node.isRequired,
+};

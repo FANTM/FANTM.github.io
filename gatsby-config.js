@@ -6,9 +6,9 @@ module.exports = {
   plugins: [
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-sitemap',
-    'gatsby-transformer-remark',
     'gatsby-plugin-material-ui',
     'gatsby-plugin-sharp',
+    'gatsby-plugin-mdx',
     'gatsby-transformer-yaml',
     {
       resolve: 'gatsby-source-filesystem',
@@ -17,9 +17,9 @@ module.exports = {
       },
     },
     {
-      resolve: 'gatsby-transformer-remark',
+      resolve: 'gatsby-plugin-mdx',
       options: {
-        plugins: [
+        gatsbyRemarkPlugins: [
           {
             resolve: 'gatsby-remark-images',
             options: {
@@ -27,6 +27,7 @@ module.exports = {
             },
           },
         ],
+        extensions: ['.md', '.mdx'],
       },
     },
     {

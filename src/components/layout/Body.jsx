@@ -6,7 +6,9 @@ const useStyles = makeStyles((theme) => ({
   spacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
+    paddingLeft: theme.spacing(3),
+    paddingRight: theme.spacing(3),
+    paddingTop: theme.spacing(2),
   },
 }));
 
