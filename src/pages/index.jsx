@@ -4,11 +4,7 @@ import '../../style/global.css';
 import PrimaryButton from '../components/buttons/PrimaryButton';
 
 function IndexPage() {
-  return (
-    <Layout>
-      <PrimaryButton />
-    </Layout>
-  );
+  return <PrimaryButton />;
 }
 
 export default IndexPage;

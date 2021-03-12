@@ -1,7 +1,7 @@
 ---
-slug: '/'
+slug: '/hardware/hookup'
 date: '2019-05-04'
-title: 'Welcome'
+title: 'Hookup'
 ---
 
 # Docs

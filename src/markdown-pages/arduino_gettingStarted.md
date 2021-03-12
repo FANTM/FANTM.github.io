@@ -1,7 +1,7 @@
 ---
-slug: '/'
+slug: '/arduino/getting-started/'
 date: '2019-05-04'
-title: 'Welcome'
+title: 'Getting Started'
 ---
 
 # Docs

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Hidden, Drawer, Divider } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -34,18 +34,30 @@ const tocQuery = graphql`
 `;
 
 // Uses a tree traversal to convert the entire Table of Contents to JSX
-function convertToJSX(nodeName, nodeSet, tree, elementJsx, level) {
+function convertToJSX(nodeName, tree, elementJsx, level, path) {
   // Base Case
+  const nodeSet = tree.get(nodeName);
   if (nodeSet.size === 0) {
     elementJsx.push(
-      <ToCChildButton key={nodeName} content={nodeName} level={level} />,
+      <ToCChildButton
+        key={nodeName}
+        content={nodeName}
+        level={level}
+        path={`${path}${nodeName}/`}
+      />,
     );
     return elementJsx;
   }
   // Traverse from left to right recursively
   let myKids = [];
   nodeSet.forEach((child) => {
-    myKids = convertToJSX(child, tree.get(child), tree, myKids, level + 1);
+    myKids = convertToJSX(
+      child,
+      tree,
+      myKids,
+      level + 1,
+      `${path}${nodeName}/`,
+    );
   });
   // Visit the actual parent after all of the children are determined.
   elementJsx.push(
@@ -60,40 +72,42 @@ function convertToJSX(nodeName, nodeSet, tree, elementJsx, level) {
 }
 
 function ToC({ mobileOpen, toggleDrawer }) {
+  const [tableOfContentsData, setTableOfContentsData] = useState([]);
   const classes = useStyles();
   const theme = useTheme();
   const data = useStaticQuery(tocQuery);
 
-  const contents = data.allTableOfContentsYaml.edges[0].node.toc;
-  const delimeter = '/';
-  const tree = new Map();
-  tree.set('root', new Set());
-  contents.forEach((element) => {
-    const pathPieces = element.split(delimeter);
-    pathPieces.forEach((piece, index) => {
-      if (index === 0) {
-        const parent = tree.get('root');
-        const curr = tree.get(piece) || new Set();
-        parent.add(piece);
-        tree.set('root', parent);
-        tree.set(piece, curr);
-      } else {
-        const parent = tree.get(pathPieces[index - 1]);
-        const curr = tree.get(piece) || new Set();
-        parent.add(piece);
-        tree.set(pathPieces[index - 1], parent);
-        tree.set(piece, curr);
-      }
+  useEffect(() => {
+    console.log('');
+    const contents = data.allTableOfContentsYaml.edges[0].node.toc;
+    const delimeter = '/';
+    const tree = new Map();
+    tree.set('root', new Set());
+    contents.forEach((element) => {
+      const pathPieces = element.split(delimeter);
+      pathPieces.forEach((piece, index) => {
+        if (index === 0) {
+          const parent = tree.get('root');
+          const curr = tree.get(piece) || new Set();
+          parent.add(piece);
+          tree.set('root', parent);
+          tree.set(piece, curr);
+        } else {
+          const parent = tree.get(pathPieces[index - 1]);
+          const curr = tree.get(piece) || new Set();
+          parent.add(piece);
+          tree.set(pathPieces[index - 1], parent);
+          tree.set(piece, curr);
+        }
+      });
     });
-  });
-  const node = tree.get('root');
-  const tableOfContentsData = [];
-  console.log(node);
-  node.forEach((child) => {
-    console.log(child);
-    tableOfContentsData.push(convertToJSX(child, tree.get(child), tree, [], 0));
-  });
-  // const tableOfContentsData = convertToJSX('root', node, tree, [], 0);
+    const node = tree.get('root');
+    const tempData = [];
+    node.forEach((child) => {
+      tempData.push(convertToJSX(child, tree, [], 0, '/'));
+    });
+    setTableOfContentsData(tempData);
+  }, [data]);
 
   let container;
 

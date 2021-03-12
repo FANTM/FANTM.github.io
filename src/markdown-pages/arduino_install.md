@@ -1,7 +1,7 @@
 ---
-slug: '/'
+slug: '/arduino/installation'
 date: '2019-05-04'
-title: 'Welcome'
+title: 'Installing the FANTM Arduino Package'
 ---
 
 # Docs
