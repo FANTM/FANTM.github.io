@@ -1,3 +1,6 @@
+const fs = require('fs');
+const path = require('path');
+
 exports.createPages = async ({ actions, graphql, reporter }) => {
   const { createPage } = actions;
 
@@ -35,4 +38,8 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
       },
     });
   });
+};
+
+exports.onPostBuild = () => {
+  fs.writeFileSync(path.resolve('./public/CNAME'), 'docs.getfantm.com');
 };

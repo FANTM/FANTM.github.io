@@ -53,6 +53,7 @@ function Layout({ children }) {
           h5: DesignSystem.h5,
           h6: DesignSystem.h6,
           p: DesignSystem.p,
+          code: DesignSystem.code,
         }}
       >
         <div className={classes.root}>

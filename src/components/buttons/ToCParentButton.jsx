@@ -6,8 +6,12 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
   root: {
+    color: 'white',
     justifyContent: 'left',
     width: '100%',
+    '&:hover': {
+      backgroundColor: 'rgba(255, 255, 255, 0.14)',
+    },
   },
 });
 
