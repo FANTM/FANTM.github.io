@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Hidden, Drawer, Divider } from '@material-ui/core';
+import { Hidden, Drawer } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { graphql, useStaticQuery } from 'gatsby';
 
@@ -120,6 +120,14 @@ function ToC({ mobileOpen, toggleDrawer }) {
     container = window !== undefined ? () => window.document.body : undefined;
   }, []);
 
+  const ToCInternals = (
+    <>
+      <LogoButton />
+      <div className={classes.spacer} />
+      {tableOfContentsData}
+    </>
+  );
+
   return (
     <nav className={classes.drawer} aria-label="documentation navigation">
       <Hidden smUp implementation="css">
@@ -136,9 +144,7 @@ function ToC({ mobileOpen, toggleDrawer }) {
             keepMounted: true, // Better open performance on mobile.
           }}
         >
-          <LogoButton containerWidth={drawerWidth} />
-          <Divider />
-          {tableOfContentsData}
+          {ToCInternals}
         </Drawer>
       </Hidden>
       <Hidden xsDown implementation="css">
@@ -149,9 +155,7 @@ function ToC({ mobileOpen, toggleDrawer }) {
           variant="permanent"
           open
         >
-          <LogoButton />
-          <div className={classes.spacer} />
-          {tableOfContentsData}
+          {ToCInternals}
         </Drawer>
       </Hidden>
     </nav>

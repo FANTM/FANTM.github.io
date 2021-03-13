@@ -1,4 +1,4 @@
-import { Button, Link, Typography } from '@material-ui/core';
+import { Link, Typography } from '@material-ui/core';
 import { Link as GatsbyLink } from 'gatsby';
 import React from 'react';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
