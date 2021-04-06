@@ -9,6 +9,8 @@ import PrimaryButton from '../components/buttons/PrimaryButton';
 const useStyles = makeStyles((theme) => ({
   root: {
     textAlign: 'center',
+    maxWidth: '90vw',
+    wordWrap: 'break-word',
   },
   actionButton: {
     margin: theme.spacing(2),

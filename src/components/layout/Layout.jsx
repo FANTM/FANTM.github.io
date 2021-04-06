@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import {
   createMuiTheme,
   makeStyles,
+  responsiveFontSizes,
   ThemeProvider,
 } from '@material-ui/core/styles';
 
@@ -13,7 +14,7 @@ import ToC from './ToC';
 import DesignSystem from '../../../style/DesignSystem';
 import PageToC from './PageToC';
 
-const theme = createMuiTheme({
+let theme = createMuiTheme({
   palette: {
     primary: {
       main: '#E47AFF',
@@ -27,6 +28,7 @@ const theme = createMuiTheme({
     },
   },
 });
+theme = responsiveFontSizes(theme);
 
 const useStyles = makeStyles({
   root: {

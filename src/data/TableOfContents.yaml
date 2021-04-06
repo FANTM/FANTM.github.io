@@ -1,5 +1,5 @@
 - toc:
-    - hardware/hookup
-    - hardware/FAQ
-    - arduino/installation
     - arduino/getting-started
+    - arduino/installation
+    - hardware/FAQ
+    - hardware/hookup-guide

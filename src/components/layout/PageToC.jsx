@@ -8,7 +8,7 @@ const maxWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('md')]: {
       width: maxWidth,
       flexShrink: 0,
     },

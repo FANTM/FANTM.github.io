@@ -43,3 +43,25 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 exports.onPostBuild = () => {
   fs.writeFileSync(path.resolve('./public/CNAME'), 'docs.getfantm.com');
 };
+
+function readTableData() {
+  const slugRegex = /slug:.*./
+  const tableOfContents = [];
+  fs.readdirSync(path.resolve('./src/markdown-pages/')).forEach((fileName) => {
+    const fullName = path.resolve(`./src/markdown-pages/${fileName}`);
+    const file = fs.readFileSync(fullName, "utf-8");
+    // Some really ugly string re-formatting follows
+    let fmtName = file.match(slugRegex)[0].split(':')[1].trim().split("'")[1];  // Yeah Im bad for using a regex, I know
+    fmtName = fmtName.split('/').map((e) => e.trim()).filter((e) => e).join('/');
+    tableOfContents.push(fmtName);
+  });
+  let yaml = `- toc:\n`
+  tableOfContents.forEach((entry) => {
+    yaml += `    - ${entry}\n`;
+  });
+  fs.writeFileSync(path.resolve('./src/data/TableOfContents.yaml'), yaml);
+}
+
+exports.onPreBootstrap = () => {
+  readTableData();
+}
