@@ -40,7 +40,7 @@ function IndexPage() {
 
       <GatsbyLink
         style={{ textDecoration: 'none' }}
-        to="/arduino/getting-started"
+        to="/DEVLPR/hardware/hookup/"
       >
         <PrimaryButton className={classes.actionButton}>
           Get started
