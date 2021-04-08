@@ -1,0 +1,18 @@
+---
+slug: '/DEVLPR/hardware/future'
+date: '2021-04-08'
+title: 'Hardware R&D Roadmap'
+---
+
+## Overview
+There are a two main pieces of the DEVLPR that we are interested in improving in the near term: the human-device interface and the ratio of signal to noise. As our plans for each become better defined, we will update this page.
+
+## Human-Device Interface
+The human-device interface in this case is the way that we read EMG, or specifically electrodes. Currently we only support traditional, sticky, painful gel electrodes. This is where we see the most potential in the hardware. 
+We are working on building our own electrode that can be taken on and off easily, and most importantly is not going to rip any hair off with it. Surprisingly this is also a software problem, as improving our signal processing 
+will give us the ability to work with messier input, which can be the case with dry electrode systems.
+
+## Signal:Noise
+Noise comes from everywhere in an electrical system; it invades from the boards power supplies, op-amp characteristics, EMG cable movement, and even the power outlets on nearby walls.
+Now that we can see an EMG signal on our board, albeit a noisy one, we are now focusing on controlling noise by adding filters to the power supply (in this case a -4.5V supply)
+and examining other op-amp options for a better fit for EMG. The INA333 instrumentation amplifier performs worse at the high levels of gain we need, so that will be something to research.

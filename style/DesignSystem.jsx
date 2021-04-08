@@ -29,7 +29,7 @@ function Header6(props) {
 }
 
 function Paragraph(props) {
-  return <Typography {...props} />;
+  return <Typography {...props} gutterBottom />;
 }
 
 function Code(props) {

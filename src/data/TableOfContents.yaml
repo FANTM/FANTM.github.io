@@ -1,5 +1,5 @@
 - toc:
-    - arduino/getting-started
-    - arduino/installation
-    - hardware/FAQ
-    - hardware/hookup-guide
+    - DEVLPR/hardware/future
+    - DEVLPR/hardware/hookup
+    - DEVLPR/software/install
+    - DEVLPR/software/future
