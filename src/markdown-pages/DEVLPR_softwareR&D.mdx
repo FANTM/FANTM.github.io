@@ -54,7 +54,7 @@ int iirLowPassFilter(int val) {
 void loop() {
   int val = analogRead(EMG_PIN);
 
-#if (IS_RAW == true)
+#if (IS_RAW == false)
   val = iirLowPassFilter(val);
 #endif
 
