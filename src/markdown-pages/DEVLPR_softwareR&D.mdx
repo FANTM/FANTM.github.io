@@ -6,3 +6,59 @@ title: 'Software R&D Roadmap'
 
 ## Overview
 The current focus is filters, and how we can break EMG out of the passive noise being read. Once we can parse the signal on a more granular level, we'll update this page with details of where we're going.
+
+## Example
+Here is a quick script to get you started
+
+```c
+
+#define ONE_KHZ  1000
+#define FIVE_KHZ 200
+#define TEN_KHZ  100
+#define IS_RAW   true
+
+const int EMG_PIN = A0;
+const int SAMPLE_RATE_US = ONE_KHZ;  // 1kHz b/c EMG is in 10-500Hz + Nyquist rate
+const float decay = .821; //0.56;  // Fc is about 500Hz, checkout https://fiiir.com/ to mess with other filters
+
+void setup() {
+  Serial.begin(9600);
+}
+
+void printDynamic(int val) {
+  Serial.println(val);
+}
+
+/**
+ * A hacky way to get Arduino to fix the bounds on the serial plotter so it 
+ * isn't constantly bouncing around. You will likely want to change the baud to handle the
+ * fact that more data is being sent. 
+ */
+void printStatic(int val) {
+  Serial.print(val);
+  Serial.print(' ');
+  Serial.print(1024);
+  Serial.print(' ');
+  Serial.print(200);
+  Serial.println();
+}
+
+// Basic IIR Low Pass filter
+int iirLowPassFilter(int val) {
+  static int prev_res = val;
+  int filteredVal = (decay * val) + ((1 - decay) * prev_res); 
+  prev_res = filteredVal;
+  return filteredVal;
+}
+
+void loop() {
+  int val = analogRead(EMG_PIN);
+
+#if (IS_RAW == true)
+  val = iirLowPassFilter(val);
+#endif
+
+  printDynamic(val);
+  delayMicroseconds(SAMPLE_RATE_US);
+}
+```
