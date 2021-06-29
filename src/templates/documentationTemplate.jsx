@@ -12,7 +12,7 @@ export default function Template({
   return (
     <div>
       <Typography variant="h2">{frontmatter.title}</Typography>
-      <Typography variant="h5">{frontmatter.date}</Typography>
+      <Typography variant="h5">{`Last Updated: ${frontmatter.date}`}</Typography>
       <br/>
       <Divider/>
       <br/>
@@ -21,18 +21,36 @@ export default function Template({
   );
 }
 
-export const pageQuery = graphql`
+export const pageQuery = graphql` 
   query($slug: String!) {
-    mdx(frontmatter: { slug: { eq: $slug } }) {
+    site(siteMetadata: {siteUrl: {}, description: {}, title: {}}) {
+      siteMetadata {
+        siteUrl
+      }
+    }
+    mdx(frontmatter: { slug: {eq: $slug}}) {
       body
       frontmatter {
-        date(formatString: "MMMM DD, YYYY")
         slug
         title
+        date(formatString: "MMMM DD, YYYY")
       }
     }
   }
 `;
+
+// export const pageQuery = graphql`
+//   query($slug: String!) {
+//     mdx(frontmatter: { slug: { eq: $slug } }) {
+//       body
+//       frontmatter {
+//         date(formatString: "MMMM DD, YYYY")
+//         slug
+//         title
+//       }
+//     }
+//   }
+// `;
 
 Template.propTypes = {
   data: PropTypes.shape({

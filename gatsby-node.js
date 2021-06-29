@@ -4,7 +4,7 @@ const path = require('path');
 exports.createPages = async ({ actions, graphql, reporter }) => {
   const { createPage } = actions;
 
-  const blogPostTemplate = require.resolve(
+  const documentationTemplate = require.resolve(
     './src/templates/documentationTemplate.jsx',
   );
 
@@ -31,7 +31,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   result.data.allMdx.edges.forEach(({ node }) => {
     createPage({
       path: node.frontmatter.slug,
-      component: blogPostTemplate,
+      component: documentationTemplate,
       context: {
         // additional data can be passed via context
         slug: node.frontmatter.slug,

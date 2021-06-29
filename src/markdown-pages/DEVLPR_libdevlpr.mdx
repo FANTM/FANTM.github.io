@@ -3,7 +3,6 @@ slug: '/DEVLPR/software/libdevlpr'
 date: '2021-06-25'
 title: 'Libdevlpr'
 ---
-
 ## Overview
 
 Libdevlpr is the Arduino API for the FANTM DEVLPR. 
@@ -13,7 +12,7 @@ For connecting the DEVLPR to a software project (e.g. connecting it to a game), 
 Libdevlpr is mainly callback oriented, allowing you to call a function at a fixed frequency, and use the incoming EMG data easily.
 It also gives you access to very basic data processing and filtering that can run on the Arduino, and primative flex detection.
 
-The whole library is open-source and can be found [here](https://github.com/FANTM/libdevlpr).
+The library is open-source and can be found [here](https://github.com/FANTM/libdevlpr).
 
 ## Installation
 
@@ -24,44 +23,43 @@ After pressing the install button, all that is left is putting `#include <Libdev
 
 *class* **Devlpr**(*pin=A0*) 
 
-This class is a a one-to-one mapping for each DEVLPR shield plugged into the Arduino.
+> This class is a a one-to-one mapping for each DEVLPR shield plugged into the Arduino.
 It is the parent of all of the filtering and callback logic in the library. 
 The *pin* parameter indicates the analog pin the DEVLPR is connected to.
 
-*void* Devlpr::**tick**()
+> *void* Devlpr::**tick**()
 
-Reads a new EMG value into the buffer and checks if any callbacks should be called. 
+>> Reads a new EMG value into the buffer and checks if any callbacks should be called. 
 A core part of the library, it almost always needs to be called in the Arduino `void loop()` function on every loop regardless of application. 
 This ensures the freshest data is in the buffer, and that nothing is missed.
 
-*unsigned int* Devlpr::**lastValue**()
+> *unsigned int* Devlpr::**lastValue**()
 
-Gets the most recent value in the EMG buffer.
+>> Gets the most recent value in the EMG buffer.
 
-*int* Devlpr::**lastValueCentered**()
+> *int* Devlpr::**lastValueCentered**()
 
-Gets the most recent value in the EMG buffer, and then subtracts the average across the buffer. In effect a DC removal filter.
+>> Gets the most recent value in the EMG buffer, and then subtracts the average across the buffer. In effect a DC removal filter.
 
-*unsigned int* Devlpr::**windowAvg**()
+> *unsigned int* Devlpr::**windowAvg**()
 
-Gets the average of all readings in the EMG buffer.
+>> Gets the average of all readings in the EMG buffer.
 
-*unsigned int* Devlpr::**windowPeakAmplitude**()
+> *unsigned int* Devlpr::**windowPeakAmplitude**()
 
-Gets the difference between the midpoint of the EMG buffer (the DC offset) and the highest point in the buffer.
+>> Gets the difference between the midpoint of the EMG buffer (the DC offset) and the highest point in the buffer.
 
-*unsigned int* Devlpr::**windowPeakToPeakAmplitude**()
+> *unsigned int* Devlpr::**windowPeakToPeakAmplitude**()
 
-Gets the difference between the lowest and highest value in the EMG buffer. 
+>> Gets the difference between the lowest and highest value in the EMG buffer. 
 Usually the most reliable way to get a high signal-to-noise representation of a muscle contraction.
 
-*int* **scheduleFunction**(*void (\*f)(Devlpr \*d), unsigned int millisPer*)
+> *int* **scheduleFunction**(*void (\*f)(Devlpr \*d), unsigned int millisPer*)
 
-Set a function to be called at some millisecond interval. The function accept a pointer to the Devlpr object as its sole arguement. 
+>> Set a function to be called at some millisecond interval. The function accept a pointer to the Devlpr object as its sole arguement. 
 
-*void* **setFlexCallback**(*void (\*f)(Devlpr \*d), float threshMult=1.5, unsigned int millisCooldown=400*)
+> *void* **setFlexCallback**(*void (\*f)(Devlpr \*d), float threshMult=1.5, unsigned int millisCooldown=400*)
 
-Set a function to be called whenever a flex is detected. The function accept a pointer to the Devlpr object as its sole arguement. 
+>> Set a function to be called whenever a flex is detected. The function accept a pointer to the Devlpr object as its sole arguement. 
 the *threshMult* also allows for tuning how sensitive the flex detection is, adjusting how hard a flex has to be to be detected. 
 The *millisCooldown* parameter is for debouncing the detection, to reduce the chance that a single muscle contraction is double counted.
-
