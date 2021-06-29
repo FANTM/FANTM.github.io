@@ -9,6 +9,7 @@ module.exports = {
     'gatsby-plugin-material-ui',
     'gatsby-plugin-image',
     'gatsby-plugin-sharp',
+    'gatsby-remark-images',
     'gatsby-plugin-mdx',
     'gatsby-transformer-yaml',
     {
@@ -46,7 +47,7 @@ module.exports = {
           {
             resolve: 'gatsby-remark-images',
             options: {
-              maxWidth: 500,
+              maxWidth: 800,
             },
           },
         ],
@@ -61,5 +62,36 @@ module.exports = {
       },
       __key: 'pages',
     },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'images',
+        path: `${__dirname}/src/images/`,
+      },
+      __key: 'images',
+    },
+    {
+      resolve: 'gatsby-transformer-remark',
+      options: {
+        plugins: [
+          {
+            resolve: 'gatsby-remark-images',
+            options: {
+              maxWidth: 590
+            }
+          },
+          `gatsby-remark-relative-images`,
+        {
+          resolve: `gatsby-remark-images`,
+          options: {
+            maxWidth: 800,
+            linkImagesToOriginal: false,
+            sizeByPixelDensity: true,
+            showCaptions: true
+          }
+        },
+        ]
+      }
+    }
   ],
 };

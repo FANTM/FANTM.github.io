@@ -54,11 +54,11 @@ This ensures the freshest data is in the buffer, and that nothing is missed.
 >> Gets the difference between the lowest and highest value in the EMG buffer. 
 Usually the most reliable way to get a high signal-to-noise representation of a muscle contraction.
 
-> *int* **scheduleFunction**(*void (\*f)(Devlpr \*d), unsigned int millisPer*)
+> *int* Devlpr::**scheduleFunction**(*void (\*f)(Devlpr \*d), unsigned int millisPer*)
 
 >> Set a function to be called at some millisecond interval. The function accept a pointer to the Devlpr object as its sole arguement. 
 
-> *void* **setFlexCallback**(*void (\*f)(Devlpr \*d), float threshMult=1.5, unsigned int millisCooldown=400*)
+> *void* Devlpr::**setFlexCallback**(*void (\*f)(Devlpr \*d), float threshMult=1.5, unsigned int millisCooldown=400*)
 
 >> Set a function to be called whenever a flex is detected. The function accept a pointer to the Devlpr object as its sole arguement. 
 the *threshMult* also allows for tuning how sensitive the flex detection is, adjusting how hard a flex has to be to be detected. 

@@ -42,12 +42,13 @@ const tocQuery = graphql`
 // Uses a tree traversal to convert the entire Table of Contents to JSX
 function convertToJSX(nodeName, tree, elementJsx, level, path) {
   // Base Case
+  const title = nodeName.replace("-", " ");
   const nodeSet = tree.get(nodeName);
   if (nodeSet.size === 0) {
     elementJsx.push(
       <ToCChildButton
         key={nodeName}
-        content={nodeName}
+        content={title}
         level={level}
         path={`${path}${nodeName}/`}
       />,
