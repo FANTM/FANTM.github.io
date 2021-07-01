@@ -1,0 +1,20 @@
+---
+slug: '/DEVLPR/software/devlprd'
+date: '2021-07-01'
+title: 'devlprd'
+---
+
+*This page is a stub*
+
+## Overview
+
+Devlprd provides an API for connecting data streams coming from a FANTM DEVLPR to an end application via Websockets.
+It is most useful when using a FANTM DEVLPR for an application off the Arduino itself, such as connecting it to a game.
+
+Devlprd requires python 3, and you can just run `python3 devlprd.py`.
+
+## Development
+
+Before you dig in, please consider that the usual case for adding topics is you need to add a data processing middleware layer, and require direct access to the serial connection.
+Even then, if you harness the `raw` topic further up the stack you can likely avoid adding code here. This is layer is designed to be agnostic to end application, rather providing different views of the data that an end user can use for any application.
+
