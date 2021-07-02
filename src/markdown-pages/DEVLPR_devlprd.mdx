@@ -15,6 +15,6 @@ Devlprd requires python 3, and you can just run `python3 devlprd.py`.
 
 ## Development
 
-Before you dig in, please consider that the usual case for adding topics is you need to add a data processing middleware layer, and require direct access to the serial connection.
-Even then, if you harness the `raw` topic further up the stack you can likely avoid adding code here. This is layer is designed to be agnostic to end application, rather providing different views of the data that an end user can use for any application.
+Before you dig in, please consider that the usual case for adding topics is you need to add a data processing middleware layer, and you require direct access to the serial connection.
+Even then, if you harness the `raw` topic further up the stack you can avoid adding code here. This layer is agnostic to end applications, instead it provides different views of the data that can be used for any application.
 

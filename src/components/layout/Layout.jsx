@@ -36,7 +36,7 @@ const useStyles = makeStyles({
   },
 });
 
-function Layout({ children }) {
+function Layout({ children, location }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const classes = useStyles();
 
@@ -51,7 +51,7 @@ function Layout({ children }) {
       >
         <div className={classes.root}>
           <Header toggleDrawer={toggleDrawer} />
-          <ToC mobileOpen={mobileOpen} toggleDrawer={toggleDrawer} />
+          <ToC mobileOpen={mobileOpen} toggleDrawer={toggleDrawer} location={location}/>
           <Body>{children}</Body>
           <PageToC />
         </div>
@@ -64,4 +64,5 @@ export default Layout;
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
+  location: PropTypes.any.isRequired,
 };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Collapse } from '@material-ui/core';
 import { KeyboardArrowRight, KeyboardArrowDown } from '@material-ui/icons';
@@ -15,14 +15,19 @@ const useStyles = makeStyles({
   },
 });
 
-function ToCParentButton({ content, level, kids }) {
-  const [expanded, setExpanded] = useState(false);
+function ToCParentButton({ content, level, kids, active }) {
+  const [expanded, setExpanded] = useState(active);
   const classes = useStyles();
   const theme = useTheme();
 
   function toggleCategory() {
     setExpanded((prevValue) => !prevValue);
   }
+
+  useEffect(() => {
+    setExpanded(active);
+    console.log(active);
+  }, [active]);
 
   return (
     <>
@@ -40,6 +45,10 @@ function ToCParentButton({ content, level, kids }) {
 }
 
 export default ToCParentButton;
+
+ToCParentButton.defaultProps = {
+  active: false,
+}
 
 ToCParentButton.propTypes = {
   content: PropTypes.string.isRequired,

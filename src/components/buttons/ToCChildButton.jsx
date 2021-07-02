@@ -18,13 +18,15 @@ const useStyles = makeStyles({
   },
 });
 
-function ToCChildButton({ content, level, path }) {
+function ToCChildButton({ content, level, path, active }) {
   const classes = useStyles();
   const theme = useTheme();
+  console.log(active);
   return (
-    <Link to={path} className={classes.link}>
+    <Link to={path} activeStyle={{backgroundColor: 'rgba(255, 255, 255, 0.3)', display: 'flex'}} className={classes.link}>
       <Button
         style={{ paddingLeft: theme.spacing(level * 2) + 16 }}
+        color={active ? 'secondary' : 'primary'}
         className={classes.button}
       >
         {content}

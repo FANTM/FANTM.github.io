@@ -40,7 +40,7 @@ const tocQuery = graphql`
 `;
 
 // Uses a tree traversal to convert the entire Table of Contents to JSX
-function convertToJSX(nodeName, tree, elementJsx, level, path) {
+function convertToJSX(nodeName, tree, elementJsx, level, path, location) {
   // Base Case
   const title = nodeName.replace("-", " ");
   const nodeSet = tree.get(nodeName);
@@ -51,6 +51,7 @@ function convertToJSX(nodeName, tree, elementJsx, level, path) {
         content={title}
         level={level}
         path={`${path}${nodeName}/`}
+        active={location.pathname === `${path}${nodeName}`}
       />,
     );
     return elementJsx;
@@ -64,6 +65,7 @@ function convertToJSX(nodeName, tree, elementJsx, level, path) {
       myKids,
       level + 1,
       `${path}${nodeName}/`,
+      location
     );
   });
   // Visit the actual parent after all of the children are determined.
@@ -73,12 +75,13 @@ function convertToJSX(nodeName, tree, elementJsx, level, path) {
       content={nodeName}
       kids={myKids}
       level={level}
+      active={location.pathname.includes(`${path}${nodeName}/`)}
     />,
   );
   return elementJsx;
 }
 
-function ToC({ mobileOpen, toggleDrawer }) {
+function ToC({ mobileOpen, toggleDrawer, location }) {
   const [tableOfContentsData, setTableOfContentsData] = useState([]);
   const classes = useStyles();
   const theme = useTheme();
@@ -91,29 +94,24 @@ function ToC({ mobileOpen, toggleDrawer }) {
     tree.set('root', new Set());
     contents.forEach((element) => {
       const pathPieces = element.split(delimeter);
+      // Build a tree based on the hierarchical structure of URIs
       pathPieces.forEach((piece, index) => {
-        if (index === 0) {
-          const parent = tree.get('root');
-          const curr = tree.get(piece) || new Set();
-          parent.add(piece);
-          tree.set('root', parent);
-          tree.set(piece, curr);
-        } else {
-          const parent = tree.get(pathPieces[index - 1]);
-          const curr = tree.get(piece) || new Set();
-          parent.add(piece);
-          tree.set(pathPieces[index - 1], parent);
-          tree.set(piece, curr);
-        }
+        const curr = tree.get(piece) || new Set();
+        const nodeName = index === 0 ? 'root' : pathPieces[index - 1];
+        const parent = tree.get(nodeName);
+        parent.add(piece);
+        tree.set(nodeName, parent);
+        tree.set(piece, curr);
       });
     });
     const node = tree.get('root');
+    console.log(tree);
     const tempData = [];
     node.forEach((child) => {
-      tempData.push(convertToJSX(child, tree, [], 0, '/'));
+      tempData.push(convertToJSX(child, tree, [], 0, '/', location));
     });
     setTableOfContentsData(tempData);
-  }, [data]);
+  }, [data, location]);
 
   let container;
 
