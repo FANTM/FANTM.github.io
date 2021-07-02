@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Link } from 'gatsby';
+import { Link, navigate, useStaticQuery, graphql } from 'gatsby';
 
 // styles
 const pageStyles = {
@@ -17,8 +17,30 @@ const paragraphStyles = {
   marginBottom: 48,
 };
 
+const tocQuery = graphql`
+  query {
+    allTableOfContentsYaml {
+      edges {
+        node {
+          toc
+        }
+      }
+    }
+  }
+`;
+
 // markup
-function NotFoundPage() {
+function NotFoundPage({location}) {
+  const data = useStaticQuery(tocQuery);
+  const contents = data.allTableOfContentsYaml.edges[0].node.toc;
+  console.log("Test!");
+  for (let entry in contents) {
+    if (entry.toLowerCase() === location.pathname.toLowerCase()) {
+      console.log(entry);
+      navigate(entry)
+      break;
+    }
+  } 
   return (
     <main style={pageStyles}>
       <title>Not found</title>

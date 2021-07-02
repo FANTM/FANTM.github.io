@@ -40,7 +40,7 @@ function IndexPage() {
 
       <GatsbyLink
         style={{ textDecoration: 'none' }}
-        to="/DEVLPR/software/libdevlpr/"
+        to="/DEVLPR/hardware/getting-started"
       >
         <PrimaryButton className={classes.actionButton}>
           Get started

@@ -47,16 +47,7 @@ function Layout({ children }) {
   return (
     <ThemeProvider theme={theme}>
       <MDXProvider
-        components={{
-          h1: DesignSystem.h1,
-          h2: DesignSystem.h2,
-          h3: DesignSystem.h3,
-          h4: DesignSystem.h4,
-          h5: DesignSystem.h5,
-          h6: DesignSystem.h6,
-          p: DesignSystem.p,
-          code: DesignSystem.code,
-        }}
+        components={DesignSystem}
       >
         <div className={classes.root}>
           <Header toggleDrawer={toggleDrawer} />

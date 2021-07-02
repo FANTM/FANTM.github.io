@@ -3,13 +3,14 @@ import { Typography } from '@material-ui/core';
 import Highlight, { defaultProps } from 'prism-react-renderer';
 import theme from 'prism-react-renderer/themes/dracula';
 import React from 'react';
+import { Link } from 'gatsby';
 
 function Header1(props) {
   return <Typography {...props} variant="h2" id={props.children} gutterBottom/>;
 }
 
 function Header2(props) {
-  return <Typography {...props} style={(() => {console.log(props);return {};})()} variant="h3" id={props.children} gutterBottom/>;
+  return <Typography {...props} variant="h3" id={props.children} gutterBottom/>;
 }
 
 function Header3(props) {
@@ -21,7 +22,7 @@ function Header4(props) {
 }
 
 function Header5(props) {
-  return <Typography {...props} style={props.location.includes(props.children[0]) ? {backgroundColor: "#FFFF00"} : {}} variant="h6" id={props.children} gutterBottom />;
+  return <Typography {...props} variant="h6" id={props.children} gutterBottom />;
 }
 
 function Header6(props) {
@@ -30,6 +31,10 @@ function Header6(props) {
 
 function Paragraph(props) {
   return <Typography {...props} gutterBottom />;
+}
+
+function InternalLink(props) {
+  return <Link to={props.to}>{props.children}</Link>;
 }
 
 function Code(props) {
@@ -71,6 +76,7 @@ const DesignSystem = {
   h6: Header6,
   p: Paragraph,
   code: Code,
+  InternalLink: InternalLink
 };
 
 export default DesignSystem;
