@@ -26,7 +26,6 @@ function ToCParentButton({ content, level, kids, active }) {
 
   useEffect(() => {
     setExpanded(active);
-    console.log(active);
   }, [active]);
 
   return (

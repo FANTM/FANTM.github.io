@@ -21,7 +21,6 @@ const useStyles = makeStyles({
 function ToCChildButton({ content, level, path, active }) {
   const classes = useStyles();
   const theme = useTheme();
-  console.log(active);
   return (
     <Link to={path} partiallyActive={true} activeStyle={{backgroundColor: 'rgba(255, 255, 255, 0.3)', display: 'flex'}} className={classes.link}>
       <Button

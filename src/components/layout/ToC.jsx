@@ -105,7 +105,6 @@ function ToC({ mobileOpen, toggleDrawer, location }) {
       });
     });
     const node = tree.get('root');
-    console.log(tree);
     const tempData = [];
     node.forEach((child) => {
       tempData.push(convertToJSX(child, tree, [], 0, '/', location));
