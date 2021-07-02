@@ -50,7 +50,7 @@ function convertToJSX(nodeName, tree, elementJsx, level, path, location) {
         key={nodeName}
         content={title}
         level={level}
-        path={`${path}${nodeName}/`}
+        path={`${path}${nodeName}`}
         active={location.pathname === `${path}${nodeName}`}
       />,
     );
