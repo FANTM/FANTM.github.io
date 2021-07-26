@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { Typography } from '@material-ui/core';
+import { List, ListItem, Typography, ListItemText, ListSubheader } from '@material-ui/core';
 import Highlight, { defaultProps } from 'prism-react-renderer';
 import theme from 'prism-react-renderer/themes/dracula';
 import React from 'react';
@@ -35,6 +35,10 @@ function Paragraph(props) {
 
 function InternalLink(props) {
   return <Link to={props.to}>{props.children}</Link>;
+}
+
+function MyListItem(props) {
+  return <ListItem disableGutters><ListItemText primary={props.children}/></ListItem>
 }
 
 function Code(props) {
@@ -75,8 +79,10 @@ const DesignSystem = {
   h5: Header5,
   h6: Header6,
   p: Paragraph,
+  li: MyListItem,
+  ul: List,
   code: Code,
-  InternalLink: InternalLink
+  InternalLink: InternalLink,
 };
 
 export default DesignSystem;

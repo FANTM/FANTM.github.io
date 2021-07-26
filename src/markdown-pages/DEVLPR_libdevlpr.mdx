@@ -1,6 +1,6 @@
 ---
 slug: '/DEVLPR/software/libdevlpr'
-date: '2021-07-16'
+date: '2021-07-26'
 title: 'Libdevlpr'
 ---
 
@@ -24,63 +24,72 @@ After pressing the install button, all that is left is putting `#include <Libdev
 
 ## API
 
-*#define* **FILTER_NONE** 0
+#### *#define* **FILTER_NONE** 0
 
 > Uses no filter, ensuring that functions in the API return raw data
 
-*#define* **FILTER_50HZ** 1
+#### *#define* **FILTER_50HZ** 1
 
 > Filters out the 50 Hz band of the signal, removing power line noise. Use this if you are based in a country where the grid operates at 50 Hz (e.g. most of Europe).
 
-*#define* **FILTER_60HZ** 2
+#### *#define* **FILTER_60HZ** 2
 
 > Filters out the 60 Hz band of the signal, removing power line noise. Use this if you are based in a country where the grid operates at 60 Hz (e.g. the USA)
 
-*class* **Devlpr**(*pin=A0, int filterType=FILTER_NONE*) 
+#### *class* **Devlpr**(*pin=A0, int filterType=FILTER_NONE*) 
 
 > This class is a a one-to-one mapping for each DEVLPR shield plugged into the Arduino.
 It is the parent of all of the filtering and callback logic in the library. 
-The *pin* parameter indicates the analog pin the DEVLPR is connected to.
-The *filterType* parameter expects one of the #define'd filters, and will use that filter when fetching any data.
 
-> *void* Devlpr::**tick**()
+> - **pin** indicates the analog pin the DEVLPR is connected to.
+ - **filterType** parameter expects one of the #define'd filters, and will use that filter when fetching any data.
+
+> ##### *void* Devlpr::**tick**()
 
 >> Reads a new EMG value into the buffer and checks if any callbacks should be called. 
 A core part of the library, it almost always needs to be called in the Arduino `void loop()` function on every loop regardless of application. 
 This ensures the freshest data is in the buffer, and that nothing is missed.
 
-> *unsigned int* Devlpr::**lastValue**(*bool filtered=false*)
+> ##### *unsigned int* Devlpr::**lastValue**(*bool filtered=false*)
 
 >> Gets the most recent value in the EMG buffer. 
-If *filtered* is passed in as true, it will filter the data using the filter type defined when the Devlpr object was constructed.
 
-> *int* Devlpr::**lastValueCentered**(*bool filtered=false*)
+>> - **filtered** causes the function to filter the data using the filter type defined when the Devlpr object was constructed.
+
+> ##### *int* Devlpr::**lastValueCentered**(*bool filtered=false*)
 
 >> Gets the most recent value in the EMG buffer, and then subtracts the average across the buffer. In effect a DC removal filter.
-If *filtered* is passed in as true, it will filter the data using the filter type defined when the Devlpr object was constructed.
 
-> *unsigned int* Devlpr::**windowAvg**(*bool filtered=false*)
+>> - **filtered** causes the function to filter the data using the filter type defined when the Devlpr object was constructed.
+
+> ##### *unsigned int* Devlpr::**windowAvg**(*bool filtered=false*)
 
 >> Gets the average of all readings in the EMG buffer.
-If *filtered* is passed in as true, it will filter the data using the filter type defined when the Devlpr object was constructed.
 
-> *unsigned int* Devlpr::**windowPeakAmplitude**(*bool filtered=false*)
+>> - **filtered** causes the function to filter the data using the filter type defined when the Devlpr object was constructed.
+
+> ##### *unsigned int* Devlpr::**windowPeakAmplitude**(*bool filtered=false*)
 
 >> Gets the difference between the midpoint of the EMG buffer (the DC offset) and the highest point in the buffer.
-If *filtered* is passed in as true, it will filter the data using the filter type defined when the Devlpr object was constructed.
 
-> *unsigned int* Devlpr::**windowPeakToPeakAmplitude**(*bool filtered=false*)
+>> - **filtered** causes the function to filter the data using the filter type defined when the Devlpr object was constructed.
+
+> ##### *unsigned int* Devlpr::**windowPeakToPeakAmplitude**(*bool filtered=false*)
 
 >> Gets the difference between the lowest and highest value in the EMG buffer. 
 Usually the most reliable way to get a high signal-to-noise representation of a muscle contraction.
-If *filtered* is passed in as true, it will filter the data using the filter type defined when the Devlpr object was constructed.
 
-> *int* Devlpr::**scheduleFunction**(*void (\*f)(Devlpr \*d), unsigned int millisPer*)
+>> - **filtered** causes the function to filter the data using the filter type defined when the Devlpr object was constructed.
+
+> ##### *int* Devlpr::**scheduleFunction**(*void (\*f)(Devlpr \*d), unsigned int millisPer*)
 
 >> Set a function to be called at some millisecond interval. The function accept a pointer to the Devlpr object as its sole arguement. 
 
-> *void* Devlpr::**setFlexCallback**(*void (\*f)(Devlpr \*d), float threshMult=1.5, unsigned int millisCooldown=400*)
+> ##### *void* Devlpr::**setFlexCallback**(*void (\*f)(Devlpr \*d), float threshMult=1.5, unsigned int millisCooldown=400*)
 
 >> Set a function to be called whenever a flex is detected. The function accept a pointer to the Devlpr object as its sole arguement. 
-the *threshMult* also allows for tuning how sensitive the flex detection is, adjusting how hard a flex has to be to be detected. 
-The *millisCooldown* parameter is for debouncing the detection, to reduce the chance that a single muscle contraction is double counted.
+This function almost always needs to be tuned to the specific application via modification to its threshMult and millisCooldown; 
+always do software tuning before using a screwdriver to adjust the gain.
+
+>> - **threshMult** allows for tuning how sensitive the flex detection is, adjusting how hard a flex has to be to be detected.
+- **millisCooldown** is for debouncing the detection, to reduce the chance that a single muscle contraction is double counted.
