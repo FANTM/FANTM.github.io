@@ -1,4 +1,6 @@
 # FANTM.github.io
+[![Update Documentation Website](https://github.com/FANTM/FANTM.github.io/actions/workflows/deploy.js.yml/badge.svg)](https://github.com/FANTM/FANTM.github.io/actions/workflows/deploy.js.yml)
+
 Documentation for the FANTM APIs and Libraries, hosted [here](https://docs.getfantm.com). The website is built using Gatsby (so React), along with Material-UI as the main component library. The driving philosophy is that documentation should be incur no additional overhead while being maintained; the 100% of the effort should be directed at the documents themselves. We might not be completely there yet, but most improvements will be geared towards streamlining that process over everything else.
 
 ## Getting Started. 
